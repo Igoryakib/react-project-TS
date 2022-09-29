@@ -5,6 +5,8 @@ import styles from "./Input.module.css";
 export enum InputTypes {
   PASSWORD = 'password',
   EMAIL = 'email',
+  NUMBER = 'number',
+  DATE = 'date',
 }
 
 interface IInput {
@@ -13,13 +15,13 @@ interface IInput {
   style?: string;
   placeholder?: string;
   maxLength?: number;
-  minLength?: number;
+  minLength?: number | string;
   type: InputTypes;
   text: string;
   name: string;
   autocomplete?: string;
-  value: string;
-  setValue: (arg1: string) => void;
+  value: any;
+  setValue: (arg1: any) => void;
 }
 
 const Input: FC<IInput> = ({
@@ -54,7 +56,7 @@ const Input: FC<IInput> = ({
       ) : (
         <input
           placeholder={placeholder}
-          minLength={minLength}
+          minLength={minLength as number}
           maxLength={maxLength}
           onChange={(event) => setValue(event.target.value)}
           value={value}

@@ -1,15 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {FC} from "react";
 import { useDispatch } from "react-redux";
 import styles from "./ListItem.module.css";
 
 import { removeBooking } from "../../redux/bookings/bookings-operations";
+import { ITripItem } from "../TripItem/TripItem";
+import { IBookingItem } from "../BookingItem/BookingItem";
 
-const ListItems = ({ booking, arrayItems, style, ArrayItem }) => {
+type ArrayItem = ITripItem | IBookingItem;
+
+interface IListItems<T> {
+  booking?: boolean;
+  style: string;
+  ArrayItem: (item: T) => React.ReactNode;
+  arrayItems: T[];
+}
+
+const ListItems: FC<IListItems> = ({
+  booking = false,
+  arrayItems,
+  style,
+  ArrayItem,
+}) => {
   const dispatch = useDispatch();
-  const onHandleDelete = (bookingId) => {
-    dispatch(removeBooking(bookingId));
-};
+  const onHandleDelete = (bookingId: string) => {
+    // dispatch(removeBooking(bookingId));
+  };
   return (
     <>
       {booking ? (
@@ -48,17 +63,17 @@ const ListItems = ({ booking, arrayItems, style, ArrayItem }) => {
   );
 };
 
-ListItems.propTypes = {
-  arrayItems: PropTypes.array.isRequired,
-  style: PropTypes.string.isRequired,
-  ArrayItem: PropTypes.func.isRequired,
-  booking: PropTypes.bool,
-  onDeleteItem: PropTypes.func,
-};
+// ListItems.propTypes = {
+//   arrayItems: PropTypes.array.isRequired,
+//   style: PropTypes.string.isRequired,
+//   ArrayItem: PropTypes.func.isRequired,
+//   booking: PropTypes.bool,
+//   onDeleteItem: PropTypes.func,
+// };
 
-ListItems.defaultProps = {
-  booking: false,
-  onDeleteItem: null,
-};
+// ListItems.defaultProps = {
+//   booking: false,
+//   onDeleteItem: null,
+// };
 
 export default ListItems;

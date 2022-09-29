@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import styles from "./TripItem.module.css";
 import buttonStyles from '../../components/Button/Button.module.css';
 
-interface ITripItem {
+export interface ITripItem {
   id: string;
   title: string;
   img: string;

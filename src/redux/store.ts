@@ -1,4 +1,9 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+  Middleware,
+} from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -24,22 +29,26 @@ const middleware = [
 ];
 
 const authPersistConfig = {
-    key: "auth",
-    storage,
-    whitelist: ["token"]
+  key: "auth",
+  storage,
+  whitelist: ["token"],
 };
 
+const rootReducer = combineReducers({
+  auth: persistReducer(authPersistConfig, authReducers),
+  trips: tripsReducers,
+  bookings,
+  isLoading,
+  error,
+  modal,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
 const store = configureStore({
-    reducer: {
-        auth: persistReducer(authPersistConfig, authReducers),
-        trips: tripsReducers,
-        bookings,
-        isLoading,
-        error,
-        modal
-    },
-    middleware,
-    devTools: process.env.NODE_ENV === 'development',
+  rootReducer,
+  middleware,
+  devTools: process.env.NODE_ENV === "development",
 });
 const persistor = persistStore(store);
-export {store, persistor};
+export { store, persistor };

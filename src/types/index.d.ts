@@ -10,3 +10,4 @@ declare module "*.jpg" {
 }
 
 declare module 'react-dom';
+declare module 'react-notifications';

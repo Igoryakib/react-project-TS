@@ -13,6 +13,7 @@ import PublicRoute from "../utils/publicRoute";
 import PrivateRoute from "../utils/privateRoute";
 import { getCurrentUser } from "../redux/auth/auth-operations";
 import { getIsLoading } from "../redux/selectors";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 const RegisterPage = React.lazy(() =>
   import(
@@ -45,7 +46,7 @@ const BookingsPage = React.lazy(() =>
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
+  const isLoading = useTypedSelector(getIsLoading);
   useEffect(() => {
     dispatch(getCurrentUser());
   }, []);

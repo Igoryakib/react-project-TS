@@ -9,10 +9,10 @@ export enum TypesButtons {
 }
 
 interface IButton {
-  text?: string;
+  text: string;
   type: TypesButtons;
-  style: string;
-  onClickFn: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  style?: string;
+  onClickFn?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button: FC<IButton> = ({ style = '', text, type = TypesButtons.BUTTON, onClickFn }) => {

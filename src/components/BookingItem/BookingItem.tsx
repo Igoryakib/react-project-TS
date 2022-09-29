@@ -5,7 +5,7 @@ interface ITrip {
   title: string;
 } 
 
-interface IBookingItem {
+export interface IBookingItem {
   guests: number;
   trip: ITrip;
   date: string;

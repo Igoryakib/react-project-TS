@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,18 +9,28 @@ import { addBooking } from "../../redux/bookings/bookings-operations";
 import { getModal } from "../../redux/selectors";
 import { typeModal } from "../../redux/actions";
 
-import Button from "../Button/Button";
-import Input from "../Input/Input";
+import Button, { TypesButtons } from "../Button/Button";
+import Input, { InputTypes } from "../Input/Input";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const modalRef = document.querySelector("#root-modal");
 
-const Modal = ({ level, title, duration, onClickFn, price, tripId }) => {
+interface IModal {
+  level: string;
+  title: string;
+  duration: number;
+  price: number;
+  tripId: string;
+  onClickFn: () => void;
+}
+
+const Modal: FC<IModal> = ({ level, title, duration, onClickFn, price, tripId }) => {
   const dispatch = useDispatch();
-  const isOpenModal = useSelector(getModal);
-  const userId = useSelector(getUserId);
-  const [guests, setGuests] = useState(1);
+  const isOpenModal = useTypedSelector(getModal);
+  const userId = useTypedSelector(getUserId);
+  const [guests, setGuests] = useState<number>(1);
   const [date, setDate] = useState("2022-07-20");
-  const onSubmitForm = (event) => {
+  const onSubmitForm = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const booking = {
       tripId,
@@ -28,8 +38,8 @@ const Modal = ({ level, title, duration, onClickFn, price, tripId }) => {
       guests,
       date,
     };
-    dispatch(addBooking(booking));
-    dispatch(typeModal(!isOpenModal));
+    // dispatch(addBooking(booking));
+    // dispatch(typeModal(!isOpenModal));
   };
   return createPortal(
     <div className={styles["modal"]}>
@@ -58,7 +68,7 @@ const Modal = ({ level, title, duration, onClickFn, price, tripId }) => {
             value={date}
             text="Date"
             style={styles["trip-popup__input"]}
-            type="date"
+            type={InputTypes.DATE}
             name="date"
           />
           <Input
@@ -68,7 +78,7 @@ const Modal = ({ level, title, duration, onClickFn, price, tripId }) => {
             setValue={setGuests}
             value={guests}
             name="guests"
-            type="number"
+            type={InputTypes.NUMBER}
             minLength={1}
             maxLength={10}
           />
@@ -78,7 +88,7 @@ const Modal = ({ level, title, duration, onClickFn, price, tripId }) => {
               {price * guests}$
             </output>
           </span>
-          <Button type="submit" text="Book a trip" />
+          <Button type={TypesButtons.SUBMIT} text="Book a trip" />
         </form>
       </div>
     </div>,
