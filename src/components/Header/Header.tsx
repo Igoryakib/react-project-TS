@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import PropTypes from 'prop-types';
-
 import Navigation from '../Navigation/Navigation';
 
 import routes from '../../utils/routes';
 import styles from './Header.module.css';
 
-const Header = () => {
+const Header: FC = () => {
   const {pathname} = useLocation();
     return(
         <header className={styles.header}>

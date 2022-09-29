@@ -1,8 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {FC} from "react";
 import styles from "./BookingItem.module.css";
 
-const BookingItem = ({ onClickDelete, guests, date, totalPrice, trip }) => {
+interface ITrip {
+  title: string;
+} 
+
+interface IBookingItem {
+  guests: number;
+  trip: ITrip;
+  date: string;
+  totalPrice: number;
+  onClickDelete: () => void;
+}
+
+const BookingItem: FC<IBookingItem> = ({
+  onClickDelete,
+  guests,
+  date,
+  totalPrice,
+  trip,
+}) => {
   const tripMonth =
     new Date(date).getMonth() + 1 >= 10
       ? new Date(date).getMonth() + 1
@@ -29,14 +46,6 @@ const BookingItem = ({ onClickDelete, guests, date, totalPrice, trip }) => {
       </button>
     </li>
   );
-};
-
-BookingItem.propTypes = {
-  guests: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-  trip: PropTypes.object.isRequired,
-  onClickDelete: PropTypes.func.isRequired,
 };
 
 export default BookingItem;

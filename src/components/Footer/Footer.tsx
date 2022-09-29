@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
 
 import styles from './Footer.module.css';
 import heart from '../../static/heart.svg';
